@@ -1,0 +1,11 @@
+{
+  "name": "node-files-manager",
+  "version": "1.0.0",
+  "description": "rs school project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bazloo",
+  "license": "ISC"
+}
