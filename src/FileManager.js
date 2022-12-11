@@ -18,6 +18,10 @@ export class FileManager {
       const userName = userNameArgument.split('=')[1];
       programState = new this.StateManager(userName, currentDirectory);
       this.CommandExecutor = new this.CommandExecutor(programState);
+
+      process.on('exit', (code) => {
+        if (!code) console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
+      });
     } else {
       throw new Error('no user name provided'); // TODO handle
     }

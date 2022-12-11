@@ -1,10 +1,12 @@
-import { Up } from '../commands/fs/Up.js';
+import Up from '../commands/fs/Up.js';
+import ListFiles from '../commands/fs/ListFiles.js';
 
 export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
 
-    this.Up = new Up();
+    this.up = new Up();
+    this.listFiles = new ListFiles();
   }
 
   exit = () => {
@@ -12,7 +14,7 @@ export class CommandProvider {
   };
 
   up = () => {
-    const newDirectory = this.Up.goUp(this.programState.currentDirectory);
+    const newDirectory = this.up.goUp(this.programState.currentDirectory);
     this.programState.currentDirectory = newDirectory;
   };
 
@@ -20,8 +22,9 @@ export class CommandProvider {
     console.log('cd');
   };
 
-  ls = () => {
-    console.log('ls');
+  ls = async () => {
+    const content = await this.listFiles.list(this.programState.currentDirectory);
+    console.table(content);
   };
 
   cat = () => {
