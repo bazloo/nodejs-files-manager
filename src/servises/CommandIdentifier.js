@@ -4,7 +4,7 @@ export class CommandIdentifier {
    commands = availableCommands;
 
   defineCommand(inputString) { // TODO static
-    const command = availableCommands.find(({ input }) => {
+    const { input: command } = availableCommands.find(({ input }) => {
       const re = new RegExp(`^${input}`, 'i'); // TODO check flag
       return re.test(inputString);
     });
@@ -19,10 +19,10 @@ export class CommandIdentifier {
   }
 
   parsArguments(command, input) {
-    console.log(input);
     return input
-      .replace(command, '')
-      .trim()
-      .split(' '); //TODO handle
+        .replace(command, '')
+        .trim()
+        .split(/\s/)
+        .filter((argument) => argument);
   }
 }

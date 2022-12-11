@@ -1,6 +1,6 @@
 [
   { "input": ".exit", "method": "exit", "description": "exit" },
-  { "input": "up", "method": "up", "description": "goes upper from curren" },
+  { "input": "up", "method": "up", "description": "goes upper from curren folder" },
   { "input": "cd", "method": "cd", "description": "goes to dedicated folder from current directory (path_to_directory can be relative or absolute)" },
   { "input": "ls", "method": "ls", "description": "print in console list of all files" },
   { "input": "cat", "method": "cat", "description": "reads file and prints it's content" },

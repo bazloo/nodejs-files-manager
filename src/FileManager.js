@@ -1,9 +1,14 @@
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'url';
+
+const currentDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '../');
+
 export class FileManager {
   constructor(InputListener, StateManager, CommandValidator, CommandExecutor) {
     this.InputLisener = InputListener;
     this.StateManager = StateManager;
     this.CommandValidator = CommandValidator;
-    this.CommandExecutor = new CommandExecutor();
+    this.CommandExecutor = CommandExecutor;
   }
 
   run() {
@@ -11,7 +16,8 @@ export class FileManager {
     let programState;
     if (/^--userName/.test(userNameArgument)) {
       const userName = userNameArgument.split('=')[1];
-      programState = new this.StateManager(userName);
+      programState = new this.StateManager(userName, currentDirectory);
+      this.CommandExecutor = new this.CommandExecutor(programState);
     } else {
       throw new Error('no user name provided'); // TODO handle
     }
@@ -19,6 +25,7 @@ export class FileManager {
     this.InputLisener.init(this.handleUserInput);
 
     console.log(`Welcome to the File Manager, ${programState.userName}!`);
+    console.log(`You are currently in ${programState.currentDirectory}`);
   }
 
   handleUserInput = (input) => {

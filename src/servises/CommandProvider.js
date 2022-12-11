@@ -1,10 +1,19 @@
+import { Up } from '../commands/fs/Up.js';
+
 export class CommandProvider {
+  constructor(programState) {
+    this.programState = programState;
+
+    this.goUp = new Up();
+  }
+
   exit() {
     console.log('exit');
   }
 
   up() {
-    console.log('up');
+    const newDirectory = Up.goUp(this.programState.currentDirectory);
+    this.programState.currentDirectory = newDirectory;
   }
 
   cd() {
