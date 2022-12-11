@@ -1,14 +1,10 @@
-import  { StateManager } from './src/servises/StateManager.js';
+import { InputListener } from './src/servises/InputListener.js';
+import { StateManager } from './src/servises/StateManager.js'; 
+import { CommandValidator } from './src/servises/CommandValidator.js'; 
+// TODO make import dom index
 
-const userNameArgument = process.argv[2];
-let programState;
+import { FileManager } from './src/FileManager.js';
 
-if (/^--userName/.test(userNameArgument)) {
-    const userName = userNameArgument.split('=')[1];
-    programState = new StateManager(userName, null);
-} else {
-    throw new Error('no user name provided');
-}
+const fileManager = new FileManager(InputListener, StateManager, CommandValidator);
 
-console.log(programState.userName);
-// process.stdin.on('data', (data) => console.log(data.toString()));
+fileManager.run();

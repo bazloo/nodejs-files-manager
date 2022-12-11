@@ -1,5 +1,6 @@
-export class ComandValidator {
+export class CommandValidator {
     static commands = [
+        '.exit',
         'up', // goes upper from curren
         'cd', // goes to dedicated folder from current directory (path_to_directory can be relative or absolute)
         'ls', // print in console list of all files
@@ -16,12 +17,12 @@ export class ComandValidator {
         'os --architecture', // gets CPU architecture
         'hash', // calculates hash for file and print it into console
         'compress', // compress file using Brotli algorithm
-        'decompress', // decompress file   
+        'decompress', // decompress file             
     ];
 
-    getСommand(input) {        
-        const command = this.commands.find((command) => {
-            const re = new RegExp(`^${command}`);
+    defineСommand(input) { // TODO static        
+        const command = CommandValidator.commands.find((command) => {
+            const re = new RegExp(`^${command}`, 'i'); // TODO check flag
             return re.test(input);
         });
 
@@ -29,13 +30,16 @@ export class ComandValidator {
             throw new Error('Unknown command');
         }
         
-        return parsArguments(command, input);
+        const commandArguments = this.parsArguments(command, input);
+
+        return [command, commandArguments];
     }
 
     parsArguments(command, input) {
+        console.log(input);
         return input
-            .replase(command, '')
+            .replace(command, '')
             .trim()
-            .split('');
-    }
+            .split(' ');
+    }    
 }
