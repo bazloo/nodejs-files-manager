@@ -1,14 +1,17 @@
-import { CommandProvider } from "./commandProvider";
+import { CommandProvider } from './CommandProvider.js';
+import { CommandValidator } from './CommandValidator.js';
 
 export class CommandExecutor extends CommandProvider {
-    
-    constructor() {
-        this.commands = {
-            
-        };
-    }
+  constructor() {
+    super();
+    this.commands = CommandValidator.commands.reduce((availableCommands, { input, method }) => {
+      availableCommands[input] = this[method];
+      return availableCommands;
+    }, {});
+  }
 
-    execute() {
-        
-    }
+  execute(inputCommand) {
+    const [{ input: command }, args] = inputCommand;
+    this.commands[command](args);
+  }
 }

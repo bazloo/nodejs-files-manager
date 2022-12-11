@@ -1,7 +1,7 @@
 export class InputListener {
-    static init(handler) {
-        process.stdin.on('data', (input) => {            
-            handler(input.toString());
-        });
-    };
+  static init(handler) {
+    process.stdin.on('data', (input) => {
+      handler(input.toString());
+    });
+  }
 }
