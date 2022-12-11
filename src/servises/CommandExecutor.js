@@ -7,6 +7,8 @@ export class CommandExecutor extends CommandProvider {
     this.commands = availableCommands.reduce((availableCommands, { input, method }) => {
       availableCommands[input] = this[method];
       return availableCommands;
+
+      this.programState = programState;
     }, {});
   }
 

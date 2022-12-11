@@ -4,79 +4,79 @@ export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
 
-    this.goUp = new Up();
+    this.Up = new Up();
   }
 
-  exit() {
-    console.log('exit');
-  }
+  exit = () => {
+    process.exit(0);
+  };
 
-  up() {
-    const newDirectory = Up.goUp(this.programState.currentDirectory);
+  up = () => {
+    const newDirectory = this.Up.goUp(this.programState.currentDirectory);
     this.programState.currentDirectory = newDirectory;
-  }
+  };
 
-  cd() {
+  cd = () => {
     console.log('cd');
-  }
+  };
 
-  ls() {
+  ls = () => {
     console.log('ls');
-  }
+  };
 
-  cat() {
+  cat = () => {
     console.log('cat');
-  }
+  };
 
-  add() {
+  add = () => {
     console.log('add');
-  }
+  };
 
-  rn() {
+  rn = () => {
     console.log('rn');
-  }
+  };
 
-  cp() {
+  cp = () => {
     console.log('executed cp');
-  }
+  };
 
-  mv() {
+  mv = () => {
     console.log('mv');
-  }
+  };
 
-  rm() {
+  rm = () => {
     console.log('rm');
-  }
+  };
 
-  eol() {
+  eol = () => {
     console.log('eol');
-  }
+  };
 
-  cpus() {
+  cpus = () => {
     console.log('cpus');
-  }
+  };
 
-  homedir() {
+  homedir = () => {
     console.log('homedir');
-  }
+  };
 
-  username() {
+  username = () => {
     console.log('username');
-  }
+  };
 
-  architecture() {
+  architecture = () => {
     console.log('architecture');
-  }
+  };
 
-  hash() {
+  hash = () => {
     console.log('hash');
-  }
+  };
 
-  compress() {
+  compress = () => {
     console.log('compress');
-  }
+  };
 
-  decompress() {
+  decompress = () => {
     console.log('decompress');
-  }
+  };
 }
