@@ -12,9 +12,9 @@ export class CommandExecutor extends CommandProvider {
     }, {});
   }
 
-  execute(inputCommand) {
+  async execute(inputCommand) {
     const [command, args] = inputCommand;
-    this.commands[command](args);
+    await this.commands[command](args);
     console.log(`You are currently in ${this.programState.currentDirectory}`);
   }
 }

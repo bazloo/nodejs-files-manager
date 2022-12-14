@@ -1,7 +1,7 @@
 import { resolve, dirname } from 'node:path';
 
 export default class Up {
-  goUp(path) {
+  up(path) {
     return resolve(dirname(path), '../');
   }
 }

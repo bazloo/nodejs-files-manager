@@ -1,12 +1,14 @@
 import Up from '../commands/fs/Up.js';
 import ListFiles from '../commands/fs/ListFiles.js';
+import Cat from '../commands/fs/Cat.js';
 
 export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
 
-    this.up = new Up();
+    this.goUp = new Up();
     this.listFiles = new ListFiles();
+    this.concat = new Cat();
   }
 
   exit = () => {
@@ -14,7 +16,7 @@ export class CommandProvider {
   };
 
   up = () => {
-    const newDirectory = this.up.goUp(this.programState.currentDirectory);
+    const newDirectory = this.goUp.up(this.programState.currentDirectory);
     this.programState.currentDirectory = newDirectory;
   };
 
@@ -27,8 +29,10 @@ export class CommandProvider {
     console.table(content);
   };
 
-  cat = () => {
-    console.log('cat');
+  cat = async ([filePath]) => {
+    console.log('arg', filePath);
+    const content = await this.concat.readFile(filePath);
+    console.log(content.toString());
   };
 
   add = () => {
