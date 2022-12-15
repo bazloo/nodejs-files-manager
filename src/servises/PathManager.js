@@ -5,7 +5,7 @@ export default class PathManager {
   currentDirectory;
   getAbsolutePath = (path) => (isAbsolute(path) ? path : resolve(this.currentDirectory, path));
 
-  checkIfAccessible = async (path) => {
+  checkIfExist = async (path) => {
     try {
       await access(path, constants.R_OK);
       return true;
