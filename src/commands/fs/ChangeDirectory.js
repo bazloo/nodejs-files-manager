@@ -1,22 +1,23 @@
-import { isAbsolute, resolve } from 'node:path';
-import { access, constants } from "node:fs/promises";
+import { access, constants } from 'node:fs/promises';
+import PathManager from '../../servises/PathManager.js';
 
-export default class ChangeDirectory {
-    async cd(currentDirectory, path) {
-        let targetDirectory;
+export default class ChangeDirectory extends PathManager {
+  constructor(programState) {
+    super();
+    this.programState = programState;
+  }
 
-        if (path.isAbsolute()) {
-            targetDirectory = path;
-        } else {
-            targetDirectory = resolve(currentDirectory, path);
-        }
+  async cd(path) {
+    const { currentDirectory } = this.programState;
+    if (!path || !path.trim()) return currentDirectory;
 
-        let isAccesible = await await access(targetDirectory, constants.R_OK);
-        
-        if (isAbsolute) {
-            return targetDirectory;
-        } else {
-            throw new Error(`Can not reach '${path}' directory`);
-        }
+    const targetDirectory = this.getAbsolutePath(path);
+
+    try {
+      await access(targetDirectory, constants.R_OK);
+      return targetDirectory;
+    } catch (e) {
+      throw new Error(`Can not reach '${path}' directory`);
     }
+  }
 }

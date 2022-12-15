@@ -1,14 +1,15 @@
 import Up from '../commands/fs/Up.js';
 import ListFiles from '../commands/fs/ListFiles.js';
 import Cat from '../commands/fs/Cat.js';
+import ChangeDirectory from '../commands/fs/ChangeDirectory.js';
 
 export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
-
     this.goUp = new Up();
     this.listFiles = new ListFiles();
     this.concat = new Cat();
+    this.changeDirectory = new ChangeDirectory(programState);
   }
 
   exit = () => {
@@ -20,8 +21,9 @@ export class CommandProvider {
     this.programState.currentDirectory = newDirectory;
   };
 
-  cd = () => {
-    console.log('cd');
+  cd = async ([directory]) => {
+    this.programState.currentDirectory = await this.changeDirectory
+      .cd(directory);
   };
 
   ls = async () => {
@@ -30,7 +32,6 @@ export class CommandProvider {
   };
 
   cat = async ([filePath]) => {
-    console.log('arg', filePath);
     const content = await this.concat.readFile(filePath);
     console.log(content.toString());
   };
