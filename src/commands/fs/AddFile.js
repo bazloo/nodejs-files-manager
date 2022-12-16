@@ -1,8 +1,8 @@
 import { writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import PathManager from '../../servises/PathManager.js';
 
-export default class AddFile {
-    add(cd, filename) {
-        return writeFile(resolve(cd, filename));
+export default class AddFile extends PathManager {
+    add(filename) {
+        return writeFile(this.getAbsolutePath(filename));
     }
 }

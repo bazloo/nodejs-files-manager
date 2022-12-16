@@ -1,15 +1,26 @@
-import Up from '../commands/fs/Up.js';
-import ListFiles from '../commands/fs/ListFiles.js';
-import Cat from '../commands/fs/Cat.js';
-import ChangeDirectory from '../commands/fs/ChangeDirectory.js';
+import AddFile from '../commands';
+import Cat from '../commands';
+import ChangeDirectory from '../commands';
+import CopyFile from '../commands';
+import DeleteFile from '../commands';
+import ListFiles from '../commands';
+import MoveFile from '../commands';
+import RenameFile from '../commands';
+import Up from '../commands';
 
 export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
-    this.goUp = new Up();
-    this.listFiles = new ListFiles();
+    
+    this.addFile = new AddFile();
     this.concat = new Cat();
     this.changeDirectory = new ChangeDirectory(programState);
+    this.copyFile = new CopyFile(programState);
+    this.deleteFile = new DeleteFile();
+    this.listFiles = new ListFiles();
+    this.moveFile = new MoveFile(programState);
+    this.renameFile = new RenameFile(programState);   
+    this.goUp = new Up();  
   }
 
   exit = () => {
@@ -36,16 +47,16 @@ export class CommandProvider {
     console.log(content.toString());
   };
 
-  add = () => {
-    console.log('add');
+  add = ([filename]) => {
+    return this.addFile.add(filename);
   };
 
-  rn = () => {
-    console.log('rn');
+  rn = ([pathToFile, newFileName]) => {
+    return this.renameFile.rename(pathToFile, newFileName);
   };
 
-  cp = () => {
-    console.log('executed cp');
+  cp = ([pathToFile, pathToNewDirectory]) => {
+    return this.copyFile.copy(pathToFile, pathToNewDirectory);
   };
 
   mv = () => {
