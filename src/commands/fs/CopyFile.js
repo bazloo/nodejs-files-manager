@@ -4,7 +4,7 @@ import PathManager from '../../servises/PathManager.js';
 
 export default class CopyFile extends PathManager {
   constructor(programState) {
-    super(programState);
+    super();
     this.programState = programState;
   }
 

@@ -1,16 +1,12 @@
-import PathManager from '../../servises/PathManager.js';
 import { rename as renameFile } from 'node:fs/promises';
 import { dirname, join } from 'path';
+import PathManager from '../../servises/PathManager.js';
 
-export default class RenameFile extends PathManager {   
-    constructor (programState) {
-        super(programState);
-    }
+export default class RenameFile extends PathManager {
+  rename(pathToFile, newFileName) {
+    const targetFile = this.getAbsolutePath(pathToFile);
+    const renamedFile = join(dirname(targetFile), newFileName);
 
-    rename(pathToFile, newFileName) {
-        const targetFile = this.getAbsolutePath(pathToFile);
-        const renamedFile = join(dirname(targetFile), newFileName);
-
-        return renameFile(targetFile, renamedFile);
-    }
+    return renameFile(targetFile, renamedFile);
+  }
 }

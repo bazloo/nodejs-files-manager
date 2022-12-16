@@ -1,17 +1,17 @@
-import AddFile from '../commands';
-import Cat from '../commands';
-import ChangeDirectory from '../commands';
-import CopyFile from '../commands';
-import DeleteFile from '../commands';
-import ListFiles from '../commands';
-import MoveFile from '../commands';
-import RenameFile from '../commands';
-import Up from '../commands';
+import AddFile from '../commands/fs/AddFile.js';
+import Cat from '../commands/fs/Cat.js';
+import ChangeDirectory from '../commands/fs/ChangeDirectory.js';
+import CopyFile from '../commands/fs/CopyFile.js';
+import DeleteFile from '../commands/fs/DeleteFile.js';
+import ListFiles from '../commands/fs/ListFiles.js';
+import MoveFile from '../commands/fs/MoveFile.js';
+import RenameFile from '../commands/fs/RenameFile.js';
+import Up from '../commands/fs/Up.js';
 
 export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
-    
+
     this.addFile = new AddFile();
     this.concat = new Cat();
     this.changeDirectory = new ChangeDirectory(programState);
@@ -19,13 +19,11 @@ export class CommandProvider {
     this.deleteFile = new DeleteFile();
     this.listFiles = new ListFiles();
     this.moveFile = new MoveFile(programState);
-    this.renameFile = new RenameFile(programState);   
-    this.goUp = new Up();  
+    this.renameFile = new RenameFile(programState);
+    this.goUp = new Up();
   }
 
-  exit = () => {
-    process.exit(0);
-  };
+  exit = () => process.exit(0);
 
   up = () => {
     const newDirectory = this.goUp.up(this.programState.currentDirectory);
@@ -47,24 +45,16 @@ export class CommandProvider {
     console.log(content.toString());
   };
 
-  add = ([filename]) => {
-    return this.addFile.add(filename);
-  };
+  add = ([filename]) => this.addFile.add(filename);
 
-  rn = ([pathToFile, newFileName]) => {
-    return this.renameFile.rename(pathToFile, newFileName);
-  };
+  rn = ([pathToFile, newFileName]) => this.renameFile.rename(pathToFile, newFileName);
 
-  cp = ([pathToFile, pathToNewDirectory]) => {
-    return this.copyFile.copy(pathToFile, pathToNewDirectory);
-  };
+  cp = ([pathToFile, pathToNewDirectory]) => this.copyFile.copy(pathToFile, pathToNewDirectory);
 
-  mv = () => {
-    console.log('mv');
-  };
+  mv = ([pathToFile, pathToNewDirectory]) => this.moveFile.move(pathToFile, pathToNewDirectory);
 
-  rm = () => {
-    console.log('rm');
+  rm = ([pathToFile]) => {
+    this.deleteFile.delete(pathToFile);
   };
 
   eol = () => {

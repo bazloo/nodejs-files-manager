@@ -2,8 +2,11 @@ import { isAbsolute, resolve } from 'node:path';
 import { access, constants } from 'node:fs/promises';
 
 export default class PathManager {
-  currentDirectory;
-  getAbsolutePath = (path) => (isAbsolute(path) ? path : resolve(this.currentDirectory, path));
+  constructor(programState) {
+    this.programState = programState;
+  }
+
+  getAbsolutePath = (path) => (isAbsolute(path) ? path : resolve(this.programState.currentDirectory, path));
 
   checkIfExist = async (path) => {
     try {

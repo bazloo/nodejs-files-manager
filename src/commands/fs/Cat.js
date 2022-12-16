@@ -1,7 +1,7 @@
 import { createReadStream } from 'node:fs';
 
 export default class Cat {
-   readFile(filePath) { //TODO limitation
+  readFile(filePath) { //TODO limitation
     const readStream = createReadStream(filePath);
     return new Promise((resolve, reject) => {
       const buffer = [];
