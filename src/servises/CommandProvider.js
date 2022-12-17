@@ -12,11 +12,11 @@ export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
 
-    this.addFile = new AddFile();
+    this.addFile = new AddFile(programState);
     this.concat = new Cat();
     this.changeDirectory = new ChangeDirectory(programState);
     this.copyFile = new CopyFile(programState);
-    this.deleteFile = new DeleteFile();
+    this.deleteFile = new DeleteFile(programState);
     this.listFiles = new ListFiles();
     this.moveFile = new MoveFile(programState);
     this.renameFile = new RenameFile(programState);

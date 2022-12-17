@@ -1,21 +1,23 @@
 import { createWriteStream, createReadStream } from 'node:fs';
-import { fileURLToPath } from 'url';
 import PathManager from '../../servises/PathManager.js';
+import { parse } from 'node:path';
+import { join } from 'node:path';
 
 export default class CopyFile extends PathManager {
   constructor(programState) {
-    super();
-    this.programState = programState;
+    super(programState);
   }
 
   async copy(pathToFile, copyToDirectory) {
     const fromFile = createReadStream(this.getAbsolutePath(pathToFile));
 
-    const fileName = fileURLToPath(pathToFile);
+    const { name, ext, base } = parse(this.getAbsolutePath(pathToFile)); // ??
 
-    const newFile = await this.checkIfExist(this.getAbsolutePath(`${copyToDirectory}${fileName}`))
-      ? this.getAbsolutePath(`${copyToDirectory}${fileName}_copy_${Date.now()}`)
-      : this.getAbsolutePath(`${copyToDirectory}${fileName}`);
+    const toDirectory = this.getAbsolutePath(copyToDirectory);
+
+    const newFile = await this.checkIfExist(join(toDirectory, base))
+      ? this.getAbsolutePath(`${toDirectory}/${name}_copy_${Date.now()}${ext}`)
+      : this.getAbsolutePath(`${toDirectory}/${name}${ext}`);
 
     const toFile = createWriteStream(newFile);
 

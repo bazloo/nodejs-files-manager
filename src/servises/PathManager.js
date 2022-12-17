@@ -6,14 +6,17 @@ export default class PathManager {
     this.programState = programState;
   }
 
-  getAbsolutePath = (path) => (isAbsolute(path) ? path : resolve(this.programState.currentDirectory, path));
+  getAbsolutePath(path) {
+    if (!path) return this.programState.currentDirectory;
+    return isAbsolute(path) ? path : resolve(this.programState.currentDirectory, path);
+  }
 
-  checkIfExist = async (path) => {
+  async checkIfExist(path) {
     try {
       await access(path, constants.R_OK);
       return true;
     } catch (error) {
       return false;
     }
-  };
+  }
 }
