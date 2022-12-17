@@ -8,6 +8,8 @@ import MoveFile from '../commands/fs/MoveFile.js';
 import RenameFile from '../commands/fs/RenameFile.js';
 import Up from '../commands/fs/Up.js';
 
+import Hash from '../commands/hash/hash.js';
+
 export class CommandProvider {
   constructor(programState) {
     this.programState = programState;
@@ -21,6 +23,7 @@ export class CommandProvider {
     this.moveFile = new MoveFile(programState);
     this.renameFile = new RenameFile(programState);
     this.goUp = new Up();
+    this.getHash = new Hash(programState);
   }
 
   exit = () => process.exit(0);
@@ -75,8 +78,9 @@ export class CommandProvider {
     console.log(this.programState.ARCH);
   };
 
-  hash = () => {
-    console.log('hash');
+  hash = async ([filePath]) => {
+    const hash = await this.getHash.hash(filePath);
+    console.log(hash);
   };
 
   compress = () => {
