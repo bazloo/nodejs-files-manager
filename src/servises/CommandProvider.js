@@ -9,6 +9,7 @@ import RenameFile from '../commands/fs/RenameFile.js';
 import Up from '../commands/fs/Up.js';
 
 import Hash from '../commands/hash/hash.js';
+import Compress from '../commands/zip/compress.js';
 
 export class CommandProvider {
   constructor(programState) {
@@ -23,7 +24,10 @@ export class CommandProvider {
     this.moveFile = new MoveFile(programState);
     this.renameFile = new RenameFile(programState);
     this.goUp = new Up();
+
     this.getHash = new Hash(programState);
+
+    this.zip = new Compress(programState);
   }
 
   exit = () => process.exit(0);
@@ -83,11 +87,7 @@ export class CommandProvider {
     console.log(hash);
   };
 
-  compress = () => {
-    console.log('compress');
-  };
+  compress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'compress');
 
-  decompress = () => {
-    console.log('decompress');
-  };
+  decompress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'decompress');
 }
