@@ -53,28 +53,26 @@ export class CommandProvider {
 
   mv = ([pathToFile, pathToNewDirectory]) => this.moveFile.move(pathToFile, pathToNewDirectory);
 
-  rm = ([pathToFile]) => {
-    this.deleteFile.delete(pathToFile);
-  };
+  rm = ([pathToFile]) => this.deleteFile.delete(pathToFile);
 
   eol = () => {
-    console.log('eol');
+    console.log(this.programState.EOL); // TODO fix
   };
 
   cpus = () => {
-    console.log('cpus');
+    console.log(this.programState.CPUS);
   };
 
   homedir = () => {
-    console.log('homedir');
+    console.log(this.programState.HOMEDIR);
   };
 
   username = () => {
-    console.log('username');
+    console.log(this.programState.USER_NAME);
   };
 
   architecture = () => {
-    console.log('architecture');
+    console.log(this.programState.ARCH);
   };
 
   hash = () => {

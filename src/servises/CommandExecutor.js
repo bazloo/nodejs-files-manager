@@ -13,8 +13,13 @@ export class CommandExecutor extends CommandProvider {
   }
 
   async execute(inputCommand) {
-    const [command, args] = inputCommand;
-    await this.commands[command](args);
+    try {
+      const [command, args] = inputCommand;
+      await this.commands[command](args);
+    } catch (error) {
+      console.error(error.message || error, '\n');
+    }
+
     console.log(`You are currently in ${this.programState.currentDirectory}`);
   }
 }
