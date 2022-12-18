@@ -6,6 +6,6 @@ export default class ListFiles {
     return content.map((target) => ({ // TODO sort
       Name: target.name,
       Type: target.isDirectory() ? 'directory' : 'file',
-    }));
+    })); // TODO sort
   }
 }
