@@ -1,23 +1,32 @@
-export class FileManager {
-  constructor(InputListener, StateManager, CommandIdentifier, CommandExecutor) {
+export default class FileManager {
+  constructor(
+    InputListener,
+    StateManager,
+    CommandIdentifier,
+    CommandExecutor,
+    Communicator,
+  ) {
     this.InputLisener = InputListener;
     this.StateManager = StateManager;
     this.CommandIdentifier = CommandIdentifier;
     this.CommandExecutor = CommandExecutor;
+    this.Communicator = Communicator;
   }
 
   run() {
-    const programState = new this.StateManager();
-    this.CommandExecutor = new this.CommandExecutor(programState);
+    this.programState = new this.StateManager();
+    this.CommandExecutor = new this.CommandExecutor(this.programState);
 
     this.InputLisener.init(this.handleUserInput);
 
-    console.log(`Welcome to the File Manager, ${programState.userName}!`);
-    console.log(`You are currently in ${programState.currentDirectory}`);
+    this.Communicator = new this.Communicator(this.programState);
+
+    this.Communicator.WELCOME();
+    this.Communicator.YOU_ARE_IN();
 
     process.on('exit', (code) => {
       if (!code) {
-        console.log(`Thank you for using File Manager, ${programState.userName}, goodbye!`);
+        this.Communicator.GOODBYE();
       }
     });
   }
@@ -26,6 +35,8 @@ export class FileManager {
     try {
       const command = this.CommandIdentifier.defineCommand(input);
       await this.CommandExecutor.execute(command);
+
+      this.Communicator.YOU_ARE_IN();
     } catch (error) {
       console.error(error.message || error, '\n');
     }

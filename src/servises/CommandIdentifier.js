@@ -1,6 +1,6 @@
 import { default as availableCommands } from '../commands.json' assert { type: 'json' };
 
-export class CommandIdentifier {
+export default class CommandIdentifier {
     static defineCommand(inputString) { // TODO static
     const command = availableCommands.find(({ input }) => {
       const re = new RegExp(`^${input}`, 'i'); // TODO check flag

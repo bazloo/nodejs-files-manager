@@ -1,6 +1,6 @@
 import os from 'os';
 
-export class StateManager {
+export default class StateManager {
   constructor(userName) {
     this.userName = this.parseUserName();
     this.HOMEDIR = os.homedir();
