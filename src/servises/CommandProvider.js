@@ -12,6 +12,9 @@ import Hash from '../commands/hash/hash.js';
 import Compress from '../commands/zip/compress.js';
 
 export class CommandProvider {
+
+  commands;
+
   constructor(programState) {
     this.programState = programState;
 
@@ -85,4 +88,6 @@ export class CommandProvider {
   compress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'compress');
 
   decompress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'decompress');
+
+  help = () => console.table(this.commands.map(({ input, description }) => ({input, description})));
 }

@@ -8,7 +8,7 @@ export default class CommandIdentifier {
     });
 
     if (!command) {
-      throw new Error('INVALID_INPUT: unknown command');
+      throw new Error('INVALID_INPUT: unknown command'); // TODO help
     }
 
     const commandArguments = CommandIdentifier.#parsArguments(command.input, inputString);
