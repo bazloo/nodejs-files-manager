@@ -48,7 +48,7 @@ export class CommandProvider {
   };
 
   cat = ([filePath]) => this.concat.readFile(filePath)
-    .then((content) => console.log(content.toString()));
+    .then((content) => process.stdout.write(content.toString()));
 
   add = ([filename]) => this.addFile.add(filename);
 
@@ -61,29 +61,26 @@ export class CommandProvider {
   rm = ([pathToFile]) => this.deleteFile.delete(pathToFile);
 
   eol = () => {
-    console.log(this.programState.EOL); // TODO fix
+    process.stdout.write(this.programState.EOL); // TODO fix
   };
 
   cpus = () => {
-    console.log(this.programState.CPUS);
+    process.stdout.write(this.programState.CPUS);
   };
 
   homedir = () => {
-    console.log(this.programState.HOMEDIR);
+    process.stdout.write(this.programState.HOMEDIR);
   };
 
   username = () => {
-    console.log(this.programState.USER_NAME);
+    process.stdout.write(this.programState.USER_NAME);
   };
 
   architecture = () => {
-    console.log(this.programState.ARCH);
+    process.stdout.write(this.programState.ARCH);
   };
 
-  hash = async ([filePath]) => {
-    const hash = await this.getHash.hash(filePath);
-    console.log(hash);
-  };
+  hash = ([filePath]) => this.getHash.hash(filePath).then((hash) => process.stdout.write(hash));
 
   compress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'compress');
 
