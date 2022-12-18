@@ -4,7 +4,7 @@ export default class ListFiles {
   async list(path) {
     const content = await readdir(path, { withFileTypes: true });
     return content
-      .map((target) => ({ // TODO sort
+      .map((target) => ({ // TODO fix sort
         Name: target.name,
         Type: target.isDirectory() ? 'directory' : 'file',
       }))
