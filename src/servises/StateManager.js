@@ -26,6 +26,6 @@ export default class StateManager {
     if (/^--userName/.test(userNameArgument)) {
       return userNameArgument.split('=')[1];
     }
-    throw new Error('no user name provided'); // TODO handle, put new username?
+    throw new Error('ERROR: no user name provided'); // TODO handle, put new username?
   }
 }

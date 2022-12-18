@@ -38,7 +38,7 @@ export default class FileManager {
 
       this.Communicator.YOU_ARE_IN();
     } catch (error) {
-      console.error(error.message || error, '\n');
+      this.Communicator.ERROR(error);
     }
   };
 }
