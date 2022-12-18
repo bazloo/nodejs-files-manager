@@ -1,10 +1,8 @@
 import { default as availableCommands } from '../commands.json' assert { type: 'json' };
 
 export class CommandIdentifier {
-   commands = availableCommands;
-
-  defineCommand(inputString) { // TODO static
-    const { input: command } = availableCommands.find(({ input }) => {
+    static defineCommand(inputString) { // TODO static
+    const command = availableCommands.find(({ input }) => {
       const re = new RegExp(`^${input}`, 'i'); // TODO check flag
       return re.test(inputString);
     });
@@ -13,12 +11,12 @@ export class CommandIdentifier {
       throw new Error('Unknown command');
     }
 
-    const commandArguments = this.parsArguments(command, inputString);
+    const commandArguments = CommandIdentifier.#parsArguments(command.input, inputString);
 
-    return [command, commandArguments];
+    return [command.input, commandArguments];
   }
 
-  parsArguments(command, input) {
+  static #parsArguments(command, input) {
     return input
         .replace(command, '')
         .trim()

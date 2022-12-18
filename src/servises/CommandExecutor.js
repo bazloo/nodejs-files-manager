@@ -13,13 +13,9 @@ export class CommandExecutor extends CommandProvider {
   }
 
   async execute(inputCommand) {
-    try {
-      const [command, args] = inputCommand;
-      await this.commands[command](args);
-    } catch (error) {
-      console.error(error.message || error, '\n');
-    }
-
-    console.log(`You are currently in ${this.programState.currentDirectory}`);
+    const [command, args] = inputCommand;
+    return this.commands[command](args).then(() => {
+      console.log(`You are currently in ${this.programState.currentDirectory}`);
+    });
   }
 }

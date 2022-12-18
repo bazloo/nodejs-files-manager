@@ -1,12 +1,13 @@
 import os from 'os';
 
 export class StateManager {
-  constructor(userName, currentDirectory) {
-    this.userName = userName;
-    this.currentDirectory = currentDirectory;
+  constructor(userName) {
+    this.userName = this.parseUserName();
+    this.HOMEDIR = os.homedir();
+    this.currentDirectory = this.HOMEDIR;
+
     this.EOL = os.EOL;
     this.CPUS = this.parseCpusData();
-    this.HOMEDIR = os.homedir();
     this.USER_NAME = os.userInfo().username;
     this.ARCH = os.arch();
   }
@@ -17,5 +18,14 @@ export class StateManager {
         + `Amount of CPUS - ${cpus.length}\n`
         + `Model - ${cpus[0].model}\n`
         + `Speed - ${cpus[0].speed}\n`;
+  }
+
+  parseUserName() {
+    const userNameArgument = process.argv[2];
+
+    if (/^--userName/.test(userNameArgument)) {
+      return userNameArgument.split('=')[1];
+    }
+    throw new Error('no user name provided'); // TODO handle, put new username?
   }
 }

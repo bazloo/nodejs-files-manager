@@ -9,13 +9,13 @@ export default class Compress extends PathManager {
   }
 
   compress(pathToFile, pathToDestination, option) {
-    if (option && (option === 'compress' || option === 'decompress')) {
+    if (!option && !(option === 'compress' || option === 'decompress')) {
       throw new Error('Wrong option parameter');
     }
 
     const gzip = option === 'compress'
       ? zlib.createBrotliCompress()
-      : zlib.createBrotliCompress();
+      : zlib.createBrotliDecompress();
 
     const readStream = createReadStream(this.getAbsolutePath(pathToFile));
     const writeStream = createWriteStream(this.getAbsolutePath(pathToDestination));

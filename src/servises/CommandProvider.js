@@ -16,7 +16,7 @@ export class CommandProvider {
     this.programState = programState;
 
     this.addFile = new AddFile(programState);
-    this.concat = new Cat();
+    this.concat = new Cat(programState);
     this.changeDirectory = new ChangeDirectory(programState);
     this.copyFile = new CopyFile(programState);
     this.deleteFile = new DeleteFile(programState);
@@ -47,10 +47,8 @@ export class CommandProvider {
     console.table(content);
   };
 
-  cat = async ([filePath]) => {
-    const content = await this.concat.readFile(filePath);
-    console.log(content.toString());
-  };
+  cat = ([filePath]) => this.concat.readFile(filePath)
+    .then((content) => console.log(content.toString()));
 
   add = ([filename]) => this.addFile.add(filename);
 
