@@ -16,11 +16,18 @@ export default class CommandIdentifier {
     return [command.input, commandArguments];
   }
 
-  static #parsArguments(command, input) {
-    return input
+  static #parsArguments(command, input) {    
+    const argumentsPart = input
         .replace(command, '')
-        .trim()
-        .split(/\s/)
-        .filter((argument) => argument);
+        .trim();
+
+    const separatorIndex = argumentsPart.indexOf(' ');
+    
+    if (!separatorIndex) return argumentsPart;
+
+    const firstArgument = argumentsPart.substring(0, separatorIndex);
+    const secondArgument = argumentsPart.substring(separatorIndex).trim();
+
+    return [firstArgument, secondArgument];
   }
 }
