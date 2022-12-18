@@ -8,7 +8,7 @@ export default class CommandIdentifier {
     });
 
     if (!command) {
-      throw new Error('ERROR: unknown command');
+      throw new Error('INVALID_INPUT: unknown command');
     }
 
     const commandArguments = CommandIdentifier.#parsArguments(command.input, inputString);

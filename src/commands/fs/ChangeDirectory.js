@@ -17,7 +17,7 @@ export default class ChangeDirectory extends PathManager {
       await access(targetDirectory, constants.R_OK);
       return targetDirectory;
     } catch (e) {
-      throw new Error(`ERROR: Can not reach '${path}' directory`);
+      throw new Error(`INVALID_INPUT: can not reach '${path}' directory`);
     }
   }
 }
