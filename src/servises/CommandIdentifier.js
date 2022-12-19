@@ -4,6 +4,7 @@ export default class CommandIdentifier {
 
     static #WRAPPED_COMMAND_PATTERN = /(?=["'])(?:"[^"\\]*(?:\\[\s\S][^"\\]*)*"|'[^'\\]*(?:\\[\s\S][^'\\]*)*')/g;
     static #WRAPPED_COMMAND_START = /^(?=["'])(?:"[^"\\]*(?:\\[\s\S][^"\\]*)*"|'[^'\\]*(?:\\[\s\S][^'\\]*)*')\s/g;
+    static #WRAPPING_QUOTES = /^["']|["']$/g;
 
     static defineCommand(inputString) {
     const command = availableCommands.find(({ input }) => {
@@ -32,18 +33,18 @@ export default class CommandIdentifier {
 
         if (wrappedInQuotes) {
             if (wrappedInQuotes.length === 1) {
-                return [wrappedInQuotes];
+                return wrappedInQuotes;
             } else {
                 // recursively call
                return CommandIdentifier.#findWrappedArgs(commandArguments, []);
             }
         } else {
-            const separatorIndex = commandArguments.indexOf(' ');
+            const separatOfIndex = commandArguments.indexOf(' ');
 
-            if (!separatorIndex) return [commandArguments];
+            if (!separatOfIndex) return [commandArguments];
 
-            firstArgument = commandArguments.substring(0, separatorIndex);
-            secondArgument = commandArguments.substring(separatorIndex).trim();
+            firstArgument = commandArguments.substring(0, separatOfIndex);
+            secondArgument = commandArguments.substring(separatOfIndex).trim();
 
             return [firstArgument, secondArgument];
         }
@@ -57,7 +58,8 @@ export default class CommandIdentifier {
      */
     static #findWrappedArgs(string, results) {
         if (this.#WRAPPED_COMMAND_START.test(string)) {
-            results.push(string.match(this.#WRAPPED_COMMAND_START)[0].trim());
+            results.push(
+                string.match(this.#WRAPPED_COMMAND_START)[0].trim().replace(CommandIdentifier.#WRAPPING_QUOTES));
             return CommandIdentifier.#findWrappedArgs(string.replace(this.#WRAPPED_COMMAND_START, ' ').trim(), results);
         } else {
             return [...results, ...string.split(' ')];
