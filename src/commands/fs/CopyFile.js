@@ -24,7 +24,7 @@ export default class CopyFile extends PathManager {
       fromFile.on('error', (err) => reject(err));
       toFile.on('error', (err) => reject(err));
 
-      toFile.on('end', () => resolve());
+      toFile.on('finish', () => resolve());
 
       fromFile.pipe(toFile);
     });

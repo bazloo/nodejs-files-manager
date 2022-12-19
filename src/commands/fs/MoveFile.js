@@ -4,7 +4,7 @@ import DeleteFile from './DeleteFile.js';
 export default class MoveFile {
   constructor(programState) {
     this.copyFile = new CopyFile(programState);
-    this.deleteFile = new DeleteFile();
+    this.deleteFile = new DeleteFile(programState);
   }
 
   async move(pathToFile, pathToNewDirectory) {
