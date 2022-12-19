@@ -3,7 +3,7 @@ import PathManager from '../../servises/PathManager.js';
 
 export default class Cat extends PathManager {
   readFile(filePath) {
-    const readStream = createReadStream(this.getAbsolutePath(filePath));
+    const readStream = createReadStream(this.getAbsolutePath(filePath)); // TODO limitation
     return new Promise((resolve, reject) => {
       const buffer = [];
 

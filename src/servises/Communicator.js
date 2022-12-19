@@ -13,7 +13,7 @@ export default class Communicator {
 
   SEPARATE = () => process.stdout.write('\n');
 
-  USE_HELP = () => process.stdout.write(`You can use 'help' command, to see the list of available commands \n\n`);
+  USE_HELP = () => process.stdout.write('You can use \'help\' command, to see the list of available commands \n\n');
 
   ERROR = (error) => {
     switch (true) {

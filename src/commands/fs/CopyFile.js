@@ -1,7 +1,6 @@
 import { createWriteStream, createReadStream } from 'node:fs';
+import { parse, join } from 'node:path';
 import PathManager from '../../servises/PathManager.js';
-import { parse } from 'node:path';
-import { join } from 'node:path';
 
 export default class CopyFile extends PathManager {
   constructor(programState) {
