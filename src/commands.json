@@ -17,5 +17,6 @@
   { "input": "hash", "method": "hash", "description": "calculates hash for file and print it into console" },
   { "input": "compress", "method": "compress", "description": "compress file using Brotli algorithm" },
   { "input": "decompress", "method": "decompress", "description": "decompress file" },
-  { "input": "help", "method": "help", "description": "shows available commands" }
+  { "input": "help", "method": "help", "description": "shows available commands" },
+  { "input": "userName", "method": "userName", "description": "allows to set user name" }
 ]

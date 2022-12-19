@@ -8,7 +8,7 @@ export default class CommandIdentifier {
 
     static defineCommand(inputString) {
     const command = availableCommands.find(({ input }) => {
-      const re = new RegExp(`^${input}`, 'i'); // TODO check flag
+      const re = new RegExp(`^${input}`, 'i');
       return re.test(inputString);
     });
 

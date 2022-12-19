@@ -19,7 +19,6 @@ export default class Compress extends PathManager {
 
     const readStream = createReadStream(this.getAbsolutePath(pathToFile));
     const writeStream = createWriteStream(this.getAbsolutePath(pathToDestination));
-    // TODO handle extension
 
     return new Promise((resolve, reject) => {
       pipeline(

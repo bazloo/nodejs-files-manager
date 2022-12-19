@@ -34,6 +34,12 @@ export default class FileManager {
   handleUserInput = async (input) => {
     try {
       const command = await this.CommandIdentifier.defineCommand(input);
+
+      if (!this.programState.userName && command[0] !== 'userName') {
+        this.Communicator.PROVIDE_USER_NAME();
+        return;
+      }
+
       await this.CommandExecutor.execute(command);
 
       this.Communicator.YOU_ARE_IN();

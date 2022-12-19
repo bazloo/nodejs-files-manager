@@ -90,4 +90,10 @@ export class CommandProvider {
   decompress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'decompress');
 
   help = () => console.table(availableCommands.map(({ input, description }) => ({ input, description })));
+
+  userName = (name) => {
+    if (!this.programState.userName) {
+      this.programState.userName = name.join(' ');
+    }
+  };
 }

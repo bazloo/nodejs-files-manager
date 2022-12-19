@@ -1,7 +1,7 @@
 import os from 'os';
 
 export default class StateManager {
-  constructor(userName) {
+  constructor() {
     this.userName = this.parseUserName();
     this.HOMEDIR = os.homedir();
     this.currentDirectory = this.HOMEDIR;
@@ -26,6 +26,5 @@ export default class StateManager {
     if (/^--userName/.test(userNameArgument)) {
       return userNameArgument.split('=')[1];
     }
-    throw new Error('ERROR: no user name provided'); // TODO handle, put new username?
   }
 }
