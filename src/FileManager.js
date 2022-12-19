@@ -21,8 +21,12 @@ export default class FileManager {
 
     this.Communicator = new this.Communicator(this.programState);
 
-    this.Communicator.WELCOME();
-    this.Communicator.YOU_ARE_IN();
+    if (!this.programState.userName) {
+      this.Communicator.PROVIDE_USER_NAME();
+    } else {
+      this.Communicator.WELCOME();
+      this.Communicator.YOU_ARE_IN();
+    }
 
     process.on('exit', (code) => {
       if (!code) {
