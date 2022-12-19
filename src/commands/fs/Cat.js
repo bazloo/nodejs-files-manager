@@ -2,7 +2,7 @@ import { createReadStream } from 'node:fs';
 import PathManager from '../../servises/PathManager.js';
 
 export default class Cat extends PathManager {
-  readFile(filePath) { //TODO limitation
+  readFile(filePath) {
     const readStream = createReadStream(this.getAbsolutePath(filePath));
     return new Promise((resolve, reject) => {
       const buffer = [];

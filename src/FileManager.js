@@ -34,6 +34,7 @@ export default class FileManager {
   handleUserInput = async (input) => {
     try {
       const command = await this.CommandIdentifier.defineCommand(input);
+      this.Communicator.SEPARATE();
 
       if (!this.programState.userName && command[0] !== 'userName') {
         this.Communicator.PROVIDE_USER_NAME();
@@ -44,7 +45,7 @@ export default class FileManager {
 
       this.Communicator.YOU_ARE_IN();
     } catch (error) {
-      this.Communicator.ERROR(error); // TODO define error
+      this.Communicator.ERROR(error);
     }
   };
 }

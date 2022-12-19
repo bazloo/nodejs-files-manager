@@ -10,6 +10,6 @@ export default class MoveFile {
   async move(pathToFile, pathToNewDirectory) {
     await this.copyFile.copy(pathToFile, pathToNewDirectory);
     await this.deleteFile.delete(pathToFile);
-    // TODO success log?
+    // TODO success logs?
   }
 }

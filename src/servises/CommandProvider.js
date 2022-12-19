@@ -64,7 +64,7 @@ export class CommandProvider {
   rm = ([pathToFile]) => this.deleteFile.delete(pathToFile);
 
   eol = () => {
-    process.stdout.write(this.programState.EOL); // TODO fix
+    process.stdout.write(JSON.stringify(this.programState.EOL));
   };
 
   cpus = () => {
