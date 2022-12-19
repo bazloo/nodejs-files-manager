@@ -33,20 +33,21 @@ export default class CommandIdentifier {
 
         if (wrappedInQuotes) {
             if (wrappedInQuotes.length === 1) {
-                return wrappedInQuotes;
+                wrappedInQuotes[0] = wrappedInQuotes[0].replace(CommandIdentifier.#WRAPPING_QUOTES, '');
+                return [wrappedInQuotes];
             } else {
                 // recursively call
                return CommandIdentifier.#findWrappedArgs(commandArguments, []);
             }
         } else {
-            const separatOfIndex = commandArguments.indexOf(' ');
+            const separatedOfIndex = commandArguments.indexOf(' ');
 
-            if (!separatOfIndex) return [commandArguments];
+            if (separatedOfIndex === -1) return [[commandArguments]];
 
-            firstArgument = commandArguments.substring(0, separatOfIndex);
-            secondArgument = commandArguments.substring(separatOfIndex).trim();
+            firstArgument = commandArguments.substring(0, separatedOfIndex);
+            secondArgument = commandArguments.substring(separatedOfIndex).trim();
 
-            return [firstArgument, secondArgument];
+            return [[firstArgument, secondArgument]];
         }
     }
 
@@ -59,10 +60,10 @@ export default class CommandIdentifier {
     static #findWrappedArgs(string, results) {
         if (this.#WRAPPED_COMMAND_START.test(string)) {
             results.push(
-                string.match(this.#WRAPPED_COMMAND_START)[0].trim().replace(CommandIdentifier.#WRAPPING_QUOTES));
+                string.match(this.#WRAPPED_COMMAND_START)[0].trim().replace(CommandIdentifier.#WRAPPING_QUOTES, ''));
             return CommandIdentifier.#findWrappedArgs(string.replace(this.#WRAPPED_COMMAND_START, ' ').trim(), results);
         } else {
-            return [...results, ...string.split(' ')];
+            return [[...results, ...string.split(' ')]];
         }
     }
 }
