@@ -7,7 +7,7 @@ export default class ChangeDirectory extends PathManager {
     this.programState = programState;
   }
 
-  async cd(path) {
+  async cd([path]) {
     const { currentDirectory } = this.programState;
     if (!path || !path.trim()) return currentDirectory;
 

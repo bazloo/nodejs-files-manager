@@ -9,6 +9,6 @@ export default class ListFiles {
         Type: target.isDirectory() ? 'directory' : 'file',
       }))
       .sort()
-      .sort((target) => target.Type !== 'directory');
+      .sort((target) => target.Type !== 'directory'); //TODO fix
   }
 }

@@ -33,12 +33,13 @@ export default class FileManager {
 
   handleUserInput = async (input) => {
     try {
-      const command = this.CommandIdentifier.defineCommand(input);
+      const command = await this.CommandIdentifier.defineCommand(input);
       await this.CommandExecutor.execute(command);
 
       this.Communicator.YOU_ARE_IN();
     } catch (error) {
-      this.Communicator.ERROR(error); // TODO define error
+      // this.Communicator.ERROR(error); // TODO define error
+      console.log(error)
     }
   };
 }
