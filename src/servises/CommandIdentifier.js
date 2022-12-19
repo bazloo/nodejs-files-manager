@@ -3,7 +3,7 @@ import { default as availableCommands } from '../commands.json' assert { type: '
 export default class CommandIdentifier {
 
     static #WRAPPED_COMMAND_PATTERN = /(?=["'])(?:"[^"\\]*(?:\\[\s\S][^"\\]*)*"|'[^'\\]*(?:\\[\s\S][^'\\]*)*')/g;
-    static #WRAPPED_COMMAND_START = /^(?=["'])(?:"[^"\\]*(?:\\[\s\S][^"\\]*)*"|'[^'\\]*(?:\\[\s\S][^'\\]*)*')\s/g;
+    static #WRAPPED_COMMAND_START = /^(?=["'])(?:"[^"\\]*(?:\\[\s\S][^"\\]*)*"|'[^'\\]*(?:\\[\s\S][^'\\]*)*')/g;
     static #WRAPPING_QUOTES = /^["']|["']$/g;
 
     static defineCommand(inputString) {
@@ -26,9 +26,6 @@ export default class CommandIdentifier {
         const commandArguments = input
             .replace(command, '')
             .trim();
-
-        let firstArgument;
-        let secondArgument;
 
         const wrappedInQuotes = commandArguments.match(CommandIdentifier.#WRAPPED_COMMAND_PATTERN);
 
