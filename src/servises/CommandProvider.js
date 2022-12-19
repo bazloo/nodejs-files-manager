@@ -94,6 +94,7 @@ export class CommandProvider {
   userName = (name) => {
     if (!this.programState.userName) {
       this.programState.userName = name.join(' ');
+      process.stdout.write(`Welcome to the File Manager, ${this.programState.userName}!\n\n`);
     }
   };
 }
