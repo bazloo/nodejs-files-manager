@@ -11,11 +11,10 @@ import Up from '../commands/fs/Up.js';
 import Hash from '../commands/hash/hash.js';
 import Compress from '../commands/zip/compress.js';
 
+import { default as availableCommands } from '../commands.json' assert { type: 'json' };
 
 
 export class CommandProvider {
-  commands;
-
   constructor(programState) {
     this.programState = programState;
 
@@ -90,5 +89,5 @@ export class CommandProvider {
 
   decompress = ([pathToFile, pathToDestination]) => this.zip.compress(pathToFile, pathToDestination, 'decompress');
 
-  help = () => console.table(this.commands.map(({ input, description }) => ({ input, description })));
+  help = () => console.table(availableCommands.map(({ input, description }) => ({ input, description })));
 }
