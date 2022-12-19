@@ -34,7 +34,7 @@ export default class CommandIdentifier {
         if (wrappedInQuotes) {
             if (wrappedInQuotes.length === 1) {
                 wrappedInQuotes[0] = wrappedInQuotes[0].replace(CommandIdentifier.#WRAPPING_QUOTES, '');
-                return [wrappedInQuotes];
+                return wrappedInQuotes;
             } else {
                 // recursively call
                return CommandIdentifier.#findWrappedArgs(commandArguments, []);
@@ -42,12 +42,12 @@ export default class CommandIdentifier {
         } else {
             const separatedOfIndex = commandArguments.indexOf(' ');
 
-            if (separatedOfIndex === -1) return [[commandArguments]];
+            if (separatedOfIndex === -1) return [commandArguments];
 
             firstArgument = commandArguments.substring(0, separatedOfIndex);
             secondArgument = commandArguments.substring(separatedOfIndex).trim();
 
-            return [[firstArgument, secondArgument]];
+            return [firstArgument, secondArgument];
         }
     }
 

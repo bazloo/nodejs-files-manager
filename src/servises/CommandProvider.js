@@ -40,7 +40,7 @@ export class CommandProvider {
     this.programState.currentDirectory = newDirectory;
   };
 
-  cd = async ([directory]) => {
+  cd = async (directory) => {
     this.programState.currentDirectory = await this.changeDirectory
       .cd(directory);
   };
