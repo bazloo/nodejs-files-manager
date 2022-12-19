@@ -38,8 +38,7 @@ export default class FileManager {
 
       this.Communicator.YOU_ARE_IN();
     } catch (error) {
-      // this.Communicator.ERROR(error); // TODO define error
-      console.log(error)
+      this.Communicator.ERROR(error); // TODO define error
     }
   };
 }
