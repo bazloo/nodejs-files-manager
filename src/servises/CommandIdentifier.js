@@ -16,7 +16,8 @@ export default class CommandIdentifier {
       throw new Error('INVALID_INPUT: unknown command'); // TODO help
     }
 
-    const commandArguments = CommandIdentifier.#parsArguments(command.input, inputString);
+    const commandArguments = CommandIdentifier.#parsArguments(command.input, inputString)
+        .map((argument) => CommandIdentifier.#sanitizeQuotes(argument));
 
     return [command.input, commandArguments];
   }
@@ -32,38 +33,62 @@ export default class CommandIdentifier {
         const wrappedInQuotes = commandArguments.match(CommandIdentifier.#WRAPPED_COMMAND_PATTERN);
 
         if (wrappedInQuotes) {
-            if (wrappedInQuotes.length === 1) {
-                wrappedInQuotes[0] = wrappedInQuotes[0].replace(CommandIdentifier.#WRAPPING_QUOTES, '');
+            if (
+                wrappedInQuotes.length === 1
+                && !commandArguments.replace(wrappedInQuotes[0], '')
+            ) {
                 return wrappedInQuotes;
-            } else {
-                // recursively call
-               return CommandIdentifier.#findWrappedArgs(commandArguments, []);
             }
+            return CommandIdentifier.#findWrappedArgs(commandArguments, []);
         } else {
-            const separatedOfIndex = commandArguments.indexOf(' ');
-
-            if (separatedOfIndex === -1) return [commandArguments];
-
-            firstArgument = commandArguments.substring(0, separatedOfIndex);
-            secondArgument = commandArguments.substring(separatedOfIndex).trim();
-
-            return [firstArgument, secondArgument];
+            return CommandIdentifier.#splitByFirstSpace(commandArguments);
         }
     }
 
     /**
      * Recursively finds arguments
-     * @param {string} string
+     * @param {string} argumentsString
      * @param {Array<string>} results
      * @returns {Array[]}
      */
-    static #findWrappedArgs(string, results) {
-        if (this.#WRAPPED_COMMAND_START.test(string)) {
+    static #findWrappedArgs(argumentsString, results) {
+        if (this.#WRAPPED_COMMAND_START.test(argumentsString)) {
             results.push(
-                string.match(this.#WRAPPED_COMMAND_START)[0].trim().replace(CommandIdentifier.#WRAPPING_QUOTES, ''));
-            return CommandIdentifier.#findWrappedArgs(string.replace(this.#WRAPPED_COMMAND_START, ' ').trim(), results);
+                argumentsString
+                    .match(CommandIdentifier.#WRAPPED_COMMAND_START)[0]
+                    .trim()
+            )
+
+            const restArguments = argumentsString
+                .replace(CommandIdentifier.#WRAPPED_COMMAND_START, '')
+                .trim();
+
+            return CommandIdentifier.#findWrappedArgs(restArguments, results);
         } else {
-            return [[...results, ...string.split(' ')]];
+            return [...results, ...CommandIdentifier.#splitByFirstSpace(argumentsString)];
         }
+    }
+
+    static #splitByFirstSpace(string) {
+        const separatorIndex = string.indexOf(' ');
+
+        if (separatorIndex === -1) return [string];
+
+        const firstArgument = string.substring(0, separatorIndex);
+        const secondArgument = string.substring(separatorIndex).trim();
+
+        return [firstArgument, secondArgument];
+    }
+
+    static #sanitizeQuotes(argument) {
+        //const sanitizedArgument = argument.replace(CommandIdentifier.#WRAPPING_QUOTES, '');
+        const toSanitize = argument.match(CommandIdentifier.#WRAPPED_COMMAND_PATTERN);
+        if (toSanitize) {
+            toSanitize.forEach((wrongPattern) => {
+                const sanitized = wrongPattern.replace(CommandIdentifier.#WRAPPING_QUOTES, '')
+                argument = argument.replace(wrongPattern, sanitized);
+            });
+        }
+        return argument;
     }
 }
